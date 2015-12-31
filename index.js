@@ -26,7 +26,7 @@ exports.findRoot = function(graph) {
     graph.push(l);
     return root;
   }
-}
+};
 
 /*
 * Finds children nodes, returns object.
@@ -45,12 +45,12 @@ exports.findNodes = function(nodes, root) {
     }
   });
 
-  map["properties"] = {
+  map.properties = {
     "@id": "properties",
     children: [],
     parent: map[root]
   }; //populate and pepare map
-  map[root].children.push(map["properties"]);
+  map[root].children.push(map.properties);
 
   function findChildren(name, n) { //recursive children finder function
     var node = map[name],
@@ -77,7 +77,7 @@ exports.findNodes = function(nodes, root) {
       //if type is property
       if (!(type in map)) {
 
-        node.parent = map["properties"];
+        node.parent = map.properties;
         node.parent.children.push(node);
         return node;
       } else {
@@ -99,12 +99,13 @@ exports.findNodes = function(nodes, root) {
     }); //iterate over every node
   }
   return map[root];
-}
+};
 
 /*
 * Finds links between nodes in format {source: , target: }
 */
 exports.findLinks = function(nodes){
+  var properties = ["rdfs:range", "rdfs:domain", "rdf:type", "rdfs:subClassOf", "rdfs:subPropertyOf", "rdfs:subPropertyOf",  "owl:equivalentClass", "rdfs:subClassOf", "owl:disjointWith", "owl:complementOf", "owl:unionOf", "owl:intersectionOf", "owl:equivalentProperty", "owl:inverseOf", "owl:sameAs", "owl:differentFrom", "owl:AllDifferent"];
   var map = [],
     links = [];
 
@@ -113,7 +114,7 @@ exports.findLinks = function(nodes){
       map[d["@id"]] = d;
     }
   });
-  map["properties"] = {
+  map.properties = {
     "@id": "properties",
     children: [],
     parent: root
@@ -173,7 +174,7 @@ exports.findLinks = function(nodes){
   }
 
   return links;
-}
+};
 
 /*
 * Helper functions
