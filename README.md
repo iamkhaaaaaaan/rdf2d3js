@@ -3,7 +3,7 @@ This NPM module allows for the conversion of RDF/OWL vocabs to a format which ca
 
 The input format must be JSON-LD (http://www.w3.org/TR/json-ld/), I recommend this API for conversion http://rdf-translator.appspot.com/ . 
 
-Only a few have currently been commited to this repo.
+D3.js requires a specific format for Node/Link data for many of visualisations. This converts RDF data to the aformentioned Nodes/Links format. Steps are outlined below. 
 
 The source is well commented, so it should be very easy to understand the code. 
 
@@ -15,14 +15,22 @@ rdf2d3.parseToJsonLD('http://www.w3.org/ns/auth/acl', function(data){
 });
 ```
 
-Data is recieved using Ajax call in library.
+Data is recieved using Ajax call in library. The object is formatted:
+
+```
+{
+"context": [...]
+"@graph": [...]
+}
+```
+"@graph" contains the nodes. 
 
 Steps to returning propery format:
 1) Find root of nodes, if no root is found, create dummy node. Use:
   ```
   rdf2d3.findRoot(graph);
   ```
-  This is a non-returning function. May change this later.
+  This is a non-returning function, it inserts the "root" node into the graph. May change this later to return the root node. 
   
 2) Parse nodes. Use:
   ```
